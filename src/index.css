@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cyber-purple: #bc13fe;
+  --color-cyber-blue: #00f2ff;
+  --color-cyber-dark: #0a0a0a;
+  --color-cyber-bg: #050505;
+  --font-display: "Space Grotesk", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-cyber-bg text-white font-sans overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .neon-border-purple {
+    box-shadow: 0 0 5px var(--color-cyber-purple), 0 0 10px var(--color-cyber-purple);
+  }
+  .neon-border-blue {
+    box-shadow: 0 0 5px var(--color-cyber-blue), 0 0 10px var(--color-cyber-blue);
+  }
+  .neon-text-purple {
+    text-shadow: 0 0 5px var(--color-cyber-purple), 0 0 10px var(--color-cyber-purple);
+  }
+  .neon-text-blue {
+    text-shadow: 0 0 5px var(--color-cyber-blue), 0 0 10px var(--color-cyber-blue);
+  }
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
