@@ -44,7 +44,7 @@ export default function Hero({ onStart }: HeroProps) {
           A high-octane endless racing challenge in the digital void.
         </p>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
           <motion.button
             whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(188, 19, 254, 0.5)' }}
             whileTap={{ scale: 0.95 }}
@@ -62,6 +62,11 @@ export default function Hero({ onStart }: HeroProps) {
             <Trophy className="w-5 h-5" />
             LEADERBOARD
           </button>
+        </div>
+
+        <div className="flex flex-col items-center gap-2 opacity-40">
+          <span className="text-[10px] font-mono tracking-[0.3em] uppercase">Built by</span>
+          <span className="text-sm font-display font-black tracking-widest text-cyber-blue neon-text-blue">@Oluoma05</span>
         </div>
       </motion.div>
 

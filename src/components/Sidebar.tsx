@@ -59,13 +59,18 @@ export default function Sidebar({ isOpen, onClose, onNavigate }: SidebarProps) {
               ))}
             </div>
 
-            <div className="absolute bottom-8 left-8 right-8">
+            <div className="absolute bottom-8 left-8 right-8 space-y-4">
               <div className="p-4 glass rounded-xl border-cyber-purple/30">
                 <p className="text-xs text-white/50 uppercase mb-1">System Status</p>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                   <span className="text-sm font-mono">NEURAL_LINK_ACTIVE</span>
                 </div>
+              </div>
+
+              <div className="text-center">
+                <p className="text-[10px] text-white/30 uppercase tracking-[0.2em] mb-1">Built by</p>
+                <p className="text-xs font-display font-black text-cyber-blue tracking-widest">@Oluoma05</p>
               </div>
             </div>
           </motion.div>

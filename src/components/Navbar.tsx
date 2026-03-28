@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Menu, Zap, User, X } from 'lucide-react';
+import { Menu, Zap, User, X, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { sounds } from '../lib/sounds';
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -10,16 +11,32 @@ interface NavbarProps {
 
 export default function Navbar({ onMenuClick, username, onUsernameChange }: NavbarProps) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+
+  const toggleMute = () => {
+    const muted = sounds.toggleMute();
+    setIsMuted(muted);
+  };
 
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10 px-6 py-4 flex items-center justify-between">
-        <button 
-          onClick={onMenuClick}
-          className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-        >
-          <Menu className="w-6 h-6 text-white" />
-        </button>
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={onMenuClick}
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+          >
+            <Menu className="w-6 h-6 text-white" />
+          </button>
+
+          <button 
+            onClick={toggleMute}
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+            title={isMuted ? "Unmute" : "Mute"}
+          >
+            {isMuted ? <VolumeX className="w-6 h-6 text-white/50" /> : <Volume2 className="w-6 h-6 text-white" />}
+          </button>
+        </div>
 
         <div className="flex items-center gap-2">
           <Zap className="w-6 h-6 text-cyber-purple fill-cyber-purple" />

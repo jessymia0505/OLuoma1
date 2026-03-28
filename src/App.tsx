@@ -7,6 +7,7 @@ import Leaderboard from './components/Leaderboard';
 import Contact from './components/Contact';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
+import { sounds } from './lib/sounds';
 
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -15,6 +16,21 @@ export default function App() {
   const [raceReport, setRaceReport] = useState<{ distance: number, coins: number } | null>(null);
   
   const gameRef = useRef<HTMLDivElement>(null);
+
+  // Initialize music on first interaction
+  React.useEffect(() => {
+    const initAudio = () => {
+      sounds.playMusic();
+      window.removeEventListener('click', initAudio);
+      window.removeEventListener('keydown', initAudio);
+    };
+    window.addEventListener('click', initAudio);
+    window.addEventListener('keydown', initAudio);
+    return () => {
+      window.removeEventListener('click', initAudio);
+      window.removeEventListener('keydown', initAudio);
+    };
+  }, []);
 
   const handleStartGame = () => {
     setRaceReport(null);
@@ -185,6 +201,13 @@ export default function App() {
           )}
         </AnimatePresence>
       </main>
+      
+      <footer className="py-12 border-t border-white/5 text-center">
+        <p className="text-[10px] text-white/20 uppercase tracking-[0.4em] mb-2">Neural Grid Protocol v3.0</p>
+        <p className="text-sm font-display font-black tracking-widest text-cyber-blue opacity-50">
+          BUILT BY <span className="text-white">@Oluoma05</span>
+        </p>
+      </footer>
 
       {/* Decorative Elements */}
       <div className="fixed inset-0 pointer-events-none -z-10">
