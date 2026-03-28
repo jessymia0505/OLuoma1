@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Home, Gamepad2, Trophy, Mail } from 'lucide-react';
+import { X, Home, Gamepad2, Trophy, Mail, Activity } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -14,6 +14,7 @@ export default function Sidebar({ isOpen, onClose, onNavigate }: SidebarProps) {
     { id: 'game', label: 'Game', icon: Gamepad2 },
     { id: 'leaderboard', label: 'Leaderboard', icon: Trophy },
     { id: 'contact', label: 'Contact', icon: Mail },
+    { id: 'analytics', label: 'Analytics', icon: Activity, external: true, url: 'https://analytics.vgdh.io' },
   ];
 
   return (
@@ -45,17 +46,30 @@ export default function Sidebar({ isOpen, onClose, onNavigate }: SidebarProps) {
 
             <div className="space-y-4">
               {menuItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    onNavigate(item.id);
-                    onClose();
-                  }}
-                  className="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-cyber-purple/10 transition-colors group text-left"
-                >
-                  <item.icon className="w-6 h-6 text-white/50 group-hover:text-cyber-purple transition-colors" />
-                  <span className="font-display font-bold text-lg">{item.label}</span>
-                </button>
+                item.external ? (
+                  <a
+                    key={item.id}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-cyber-purple/10 transition-colors group text-left"
+                  >
+                    <item.icon className="w-6 h-6 text-white/50 group-hover:text-cyber-purple transition-colors" />
+                    <span className="font-display font-bold text-lg">{item.label}</span>
+                  </a>
+                ) : (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      onNavigate(item.id);
+                      onClose();
+                    }}
+                    className="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-cyber-purple/10 transition-colors group text-left"
+                  >
+                    <item.icon className="w-6 h-6 text-white/50 group-hover:text-cyber-purple transition-colors" />
+                    <span className="font-display font-bold text-lg">{item.label}</span>
+                  </button>
+                )
               ))}
             </div>
 

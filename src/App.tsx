@@ -6,7 +6,6 @@ import Game from './components/Game';
 import Leaderboard from './components/Leaderboard';
 import Contact from './components/Contact';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft } from 'lucide-react';
 import { sounds } from './lib/sounds';
 
 export default function App() {
@@ -74,13 +73,30 @@ export default function App() {
       setTimeout(() => {
         gameRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
-    } else if (section === 'home') {
-      setView('home');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      const element = document.getElementById(section);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+      // If we are in game view, we need to switch to home first
+      if (view === 'game') {
+        setView('home');
+        // Wait for the home view to render before scrolling
+        setTimeout(() => {
+          if (section === 'home') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            const element = document.getElementById(section);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }, 100);
+      } else {
+        if (section === 'home') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const element = document.getElementById(section);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
       }
     }
   };
@@ -94,6 +110,8 @@ export default function App() {
           setUsername(val);
           localStorage.setItem('verse_speedrun_username', val);
         }}
+        showBackButton={view === 'game'}
+        onBackClick={() => setView('home')}
       />
       <Sidebar 
         isOpen={isSidebarOpen} 
@@ -123,14 +141,7 @@ export default function App() {
               className="pt-32 pb-24"
               ref={gameRef}
             >
-              <div className="text-center mb-12 px-6 relative">
-                <button 
-                  onClick={() => setView('home')}
-                  className="absolute left-6 top-0 flex items-center gap-2 text-white/50 hover:text-white transition-colors font-display font-bold text-xs uppercase tracking-widest"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  BACK_TO_GRID
-                </button>
+              <div className="text-center mb-12 px-6">
                 <h2 className="text-4xl md:text-6xl font-display font-black mb-4 neon-text-purple">
                   RACE ACTIVE
                 </h2>
@@ -204,9 +215,20 @@ export default function App() {
       
       <footer className="py-12 border-t border-white/5 text-center">
         <p className="text-[10px] text-white/20 uppercase tracking-[0.4em] mb-2">Neural Grid Protocol v3.0</p>
-        <p className="text-sm font-display font-black tracking-widest text-cyber-blue opacity-50">
-          BUILT BY <span className="text-white">@Oluoma05</span>
-        </p>
+        <div className="flex flex-col items-center gap-4">
+          <p className="text-sm font-display font-black tracking-widest text-cyber-blue opacity-50">
+            BUILT BY <span className="text-white">@Oluoma05</span>
+          </p>
+          <a 
+            href="https://analytics.vgdh.io" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-[10px] text-cyber-purple/50 hover:text-cyber-purple transition-colors font-mono uppercase tracking-widest flex items-center gap-2"
+          >
+            <div className="w-1 h-1 bg-cyber-purple rounded-full animate-pulse" />
+            VIEW_ANALYTICS_DASHBOARD
+          </a>
+        </div>
       </footer>
 
       {/* Decorative Elements */}
